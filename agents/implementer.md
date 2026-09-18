@@ -36,11 +36,11 @@ Leé la entrada en `.ai/features.json`, `docs/engineering.md`, las instrucciones
 
 Implementá el cambio coherente más pequeño que satisfaga el contrato. Cuando exista `tasks.md`, seguí sus tareas en orden. Para cada tarea: implementá el comportamiento, añadí o actualizá sus tests, ejecutá esos tests y corregí los fallos causados por el cambio. Marcá `[x]` únicamente después de completar ese ciclo. Podés modificar `tasks.md`, pero no `requirements.md` ni `design.md`.
 
-Para una feature sin `tasks.md`, aplicá el mismo ciclo al cambio completo. Ejecutá solamente los tests creados, modificados o directamente afectados; el orquestador se ocupa del check completo. Usá Bash solo para esos tests y consultas Git de solo lectura; no ejecutes `./check.sh`, despliegues, operaciones de base de datos ni servicios externos. Si un test no puede ejecutarse por una condición externa o una operación prohibida, no la eludas: registrá el bloqueo.
+Para una feature sin `tasks.md`, aplicá el mismo ciclo al cambio completo. Durante la implementación ejecutá los tests creados, modificados o directamente afectados. Cuando el código y esos tests estén listos, ejecutá `./check.sh` como verificación completa obligatoria antes de entregar. Corregí los fallos causados por la feature. Usá Bash solo para esos tests, `./check.sh` y consultas Git de solo lectura; no ejecutes despliegues, operaciones de base de datos ni servicios externos. Si un check no puede ejecutarse por una condición externa o una operación prohibida, no la eludas: registrá el bloqueo.
 
 Escribí `.ai/progress/impl_<ID>.md` en español con exactamente una señal cerca del inicio:
 
-- `<estado-flujo>IMPLEMENTACION_COMPLETA</estado-flujo>` cuando el código esté completo y todos los tests afectados pasen.
+- `<estado-flujo>IMPLEMENTACION_COMPLETA</estado-flujo>` cuando el código esté completo, todos los tests afectados pasen y `./check.sh` finalice correctamente.
 - `<estado-flujo>IMPLEMENTACION_BLOQUEADA</estado-flujo>` cuando no puedas continuar de forma segura.
 
 Incluí:

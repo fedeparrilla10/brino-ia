@@ -8,7 +8,6 @@ const required = [
   "agents/implementer.md",
   "agents/reviewer.md",
   "commands/setup-harness.md",
-  "commands/harness.md",
   "plugins/parri-safety.js",
   "skills/setup-harness/SKILL.md",
   "skills/setup-harness/assets/check.sh",
@@ -22,8 +21,14 @@ test("incluye todos los componentes mínimos", async () => {
 });
 
 test("los tres roles y el flujo humano quedan conectados", async () => {
-  const orchestrator = await readFile(path.resolve("agents/orchestrator.md"), "utf8");
-  const implementer = await readFile(path.resolve("agents/implementer.md"), "utf8");
+  const orchestrator = await readFile(
+    path.resolve("agents/orchestrator.md"),
+    "utf8",
+  );
+  const implementer = await readFile(
+    path.resolve("agents/implementer.md"),
+    "utf8",
+  );
   const reviewer = await readFile(path.resolve("agents/reviewer.md"), "utf8");
 
   assert.match(orchestrator, /mode: primary/);
@@ -32,9 +37,15 @@ test("los tres roles y el flujo humano quedan conectados", async () => {
   assert.match(orchestrator, /"implementer": allow/);
   assert.match(orchestrator, /"reviewer": allow/);
   assert.match(orchestrator, /ejecutá primero `\.\/check\.sh`/i);
-  assert.match(orchestrator, /Cuando la revisión sea aprobada, ejecutá `\.\/check\.sh`/i);
+  assert.match(
+    orchestrator,
+    /Cuando la revisión sea aprobada, ejecutá `\.\/check\.sh`/i,
+  );
   assert.match(implementer, /Para cada tarea:/i);
-  assert.match(implementer, /tests creados, modificados o directamente afectados/i);
+  assert.match(
+    implementer,
+    /tests creados, modificados o directamente afectados/i,
+  );
   assert.match(reviewer, /tests creados o modificados por el implementador/i);
   assert.match(reviewer, /no ejecutes `\.\/check\.sh`, la suite completa/i);
   assert.match(reviewer, /edit:\n    "\*": deny/);
