@@ -8,14 +8,6 @@ Arnés mínimo para ejecutar una feature por vez con tres roles:
 
 ## Instalación
 
-Requiere OpenCode, Git, Bash y Python 3.
-
-```bash
-./install.sh
-```
-
-El instalador copia agentes, comandos, skills y plugin a `~/.config/opencode/`. No sobrescribe archivos distintos que ya existan.
-
 Reinicia OpenCode después de instalar.
 
 ## Primer uso en un proyecto
