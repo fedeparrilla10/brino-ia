@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+
+LINT_COMMAND=(__PARRI_LINT_COMMAND__)
+TYPECHECK_COMMAND=(__PARRI_TYPECHECK_COMMAND__)
+TEST_COMMAND=(__PARRI_TEST_COMMAND__)
+
+if (( $# != 0 )); then
+  printf '[FAIL] check.sh no acepta argumentos\n' >&2
+  exit 1
+fi
+
+ROOT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+cd "$ROOT_DIR" || exit 1
+
+run_check() {
+  local name="$1"
+  shift
+
+  if (( $# == 0 )); then
+    return 0
+  fi
+
+  printf '[RUN] %s\n' "$name"
+  if "$@"; then
+    printf '[OK] %s\n' "$name"
+    return 0
+  fi
+
+  printf '[FAIL] %s\n' "$name" >&2
+  return 1
+}
+
+if (( ${#TEST_COMMAND[@]} == 0 )); then
+  printf '[FAIL] La suite completa de tests no está configurada\n' >&2
+  exit 1
+fi
+
+status=0
+run_check "Linter" "${LINT_COMMAND[@]}" || status=1
+run_check "Typecheck" "${TYPECHECK_COMMAND[@]}" || status=1
+run_check "Tests" "${TEST_COMMAND[@]}" || status=1
+
+exit "$status"
