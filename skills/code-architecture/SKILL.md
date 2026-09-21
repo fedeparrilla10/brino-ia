@@ -1,55 +1,51 @@
 ---
 name: code-architecture
-description: Acordar con el usuario la arquitectura y las convenciones prácticas de un proyecto y guardarlas en docs/engineering.md. Usar cuando el usuario quiera definir o actualizar esas reglas, o cuando setup-harness lo solicite.
+description: Agree with the user on a project's architecture and practical conventions and save them in docs/engineering.md. Use when the user wants to define or update those rules, or when setup-harness requests it.
 ---
 
-# Arquitectura y convenciones
+# Architecture and conventions
 
-El objetivo es mantener una única guía breve y autoritativa en `docs/engineering.md`.
+The goal is to maintain a single concise, authoritative guide in `docs/engineering.md`.
 
-## Entender el proyecto
+## Understand the project
 
-Leé `AGENTS.md`, la documentación técnica existente y una muestra representativa del código. Diferenciá los patrones observados de las reglas deseadas: que el código legacy haga algo no significa que deba repetirse.
+Read `AGENTS.md`, existing technical documentation, and a representative sample of the code. Distinguish observed patterns from desired rules: legacy code doing something does not mean it should be repeated.
 
-## Acordar la dirección
+## Agree on direction
 
-Presentá un diagnóstico corto y una recomendación concreta. Preguntá de a una las decisiones que realmente cambien cómo se construirá el código. No impongas arquitecturas con nombre, capas ni abstracciones sin una necesidad del proyecto.
+Present a short diagnosis and concrete recommendation. Ask one at a time only about decisions that genuinely change how code will be built. Do not impose named architectures, layers, or abstractions without a project need.
 
-Priorizá reglas prácticas sobre:
+Prioritize practical rules for:
 
-- ubicación de la lógica de negocio;
-- responsabilidades de controladores, servicios, modelos o componentes;
-- validación y manejo de errores;
-- persistencia e integraciones cuando sean relevantes;
-- criterios de tests;
-- tratamiento del código legacy.
+- business-logic location;
+- controller, service, model, or component responsibilities;
+- validation and error handling;
+- persistence and integrations when relevant;
+- test criteria;
+- legacy-code treatment.
 
-La política recomendada para legacy es aplicar la guía al código nuevo y adaptar lo existente solo cuando la feature actual lo necesite.
+The recommended legacy policy is to apply the guide to new code and adapt existing code only when the current feature requires it.
 
-## Escribir la guía
+## Write the guide
 
-Creá o actualizá mínimamente `docs/engineering.md` en español. Usá esta forma:
+Create or minimally update `docs/engineering.md`. Use this format:
 
 ```markdown
-# Ingeniería
+# Engineering
 
-## Arquitectura
+## Architecture
 
-- Regla concreta.
+- Concrete rule.
 
-## Convenciones
+## Conventions
 
-- Regla concreta.
-
-## Tests
-
-- Suite completa: `comando declarado por el proyecto`.
+- Concrete rule.
 ```
 
-Apuntá a 5–10 reglas y menos de 40 líneas. Cuando `setup-harness` haya identificado checks, registrá también la suite completa y los comandos opcionales de lint o typecheck. No incluyas inventarios de archivos, explicaciones genéricas, requisitos de features ni backlogs de refactorización.
+Aim for 5–10 rules and fewer than 40 lines. When `setup-harness` has identified checks, also record the full suite and optional lint or typecheck commands. Do not include file inventories, generic explanations, feature requirements, or refactoring backlogs.
 
-Si `AGENTS.md` no referencia la guía, proponé añadir esta instrucción y pedí aprobación antes de editarlo:
+If `AGENTS.md` does not reference the guide, propose adding this instruction and ask for approval before editing it:
 
-> Antes de diseñar, implementar o revisar código, leé `docs/engineering.md` y seguí las reglas relevantes para el cambio.
+> Before designing, implementing, or reviewing code, read `docs/engineering.md` and follow the rules relevant to the change.
 
-Terminá indicando la ruta de la guía y las decisiones registradas.
+Finish by stating the guide path and recorded decisions.

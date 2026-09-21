@@ -16,11 +16,11 @@ const blockedCommand = (command, harnessEnabled) => {
   if (!harnessEnabled) return null;
 
   if (/(^|[;&|]\s*|\s)(?:\S*php\S*\s+)?(?:\S*\/)?artisan(?:\s|$)/i.test(command)) {
-    return "los comandos Artisan directos no están permitidos";
+    return "direct Artisan commands are not allowed";
   }
 
   if (/(^|[;&|]\s*|\s)(?:\S*\/)?(?:mysql|mariadb|psql|sqlite3|mongosh|redis-cli)(?:\s|$)/i.test(command)) {
-    return "los clientes directos de base de datos no están permitidos";
+    return "direct database clients are not allowed";
   }
 
   return null;
@@ -32,7 +32,7 @@ export const ParriSafety = async ({ directory }) => ({
       (input.tool === "read" || input.tool === "edit") &&
       isProtectedEnvFile(output.args.filePath ?? output.args.path)
     ) {
-      throw new Error("BLOQUEADO: los agentes no pueden leer ni modificar archivos de entorno");
+      throw new Error("BLOCKED: agents cannot read or modify environment files");
     }
 
     if (input.tool !== "bash") return;
@@ -40,7 +40,7 @@ export const ParriSafety = async ({ directory }) => ({
     const harnessEnabled = existsSync(join(directory, ".ai", "features.json"));
     const reason = blockedCommand(normalizeCommand(output.args.command), harnessEnabled);
     if (reason) {
-      throw new Error(`BLOQUEADO: ${reason}. Ejecutalo manualmente fuera de OpenCode.`);
+      throw new Error(`BLOCKED: ${reason}. Run it manually outside OpenCode.`);
     }
   },
 });

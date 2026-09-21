@@ -1,24 +1,24 @@
-# Parri Harness para OpenCode
+# Parri Harness for OpenCode
 
-Arnés mínimo para ejecutar una feature por vez con tres roles:
+Minimal harness for running one feature at a time with three roles:
 
-- `orchestrator`: prepara el SDD, ejecuta `check.sh` antes y después del trabajo y mantiene el estado.
-- `implementer`: implementa tarea por tarea y ejecuta los tests afectados en cada ciclo.
-- `reviewer`: revisa sin editar código, evalúa esos tests y los ejecuta independientemente.
+- `orchestrator`: prepares the SDD, runs `check.sh` before and after the work, and maintains state.
+- `implementer`: implements task by task and runs affected tests in every cycle.
+- `reviewer`: reviews without editing code, evaluates those tests, and runs them independently.
 
-## Instalación
+## Installation
 
-Reinicia OpenCode después de instalar.
+Restart OpenCode after installation.
 
-## Primer uso en un proyecto
+## First use in a project
 
-Desde la raíz de un repositorio Git:
+From the root of a Git repository:
 
 ```text
 /setup-harness
 ```
 
-El setup crea y configura:
+Setup creates and configures:
 
 ```text
 .ai/features.json
@@ -28,10 +28,10 @@ docs/engineering.md
 check.sh
 ```
 
-`check.sh` reúne la suite completa y, cuando el proyecto los declara, lint y typecheck. El setup descubre esos comandos en archivos públicos y solo pregunta cuando hay varias opciones o falta una suite configurada.
+`check.sh` runs the full suite and, when declared by the project, lint and typecheck. Setup discovers those commands in public files and asks only when there are multiple choices or no suite is configured.
 
-Una feature con SDD pasa por `pending -> spec_ready`, se detiene para aprobación humana y solo entonces continúa a `in_progress`.
+An SDD feature moves through `pending -> spec_ready`, stops for human approval, and only then continues to `in_progress`.
 
-## Estructura instalada
+## Installed structure
 
-OpenCode descubre automáticamente los archivos de `agents/`, `commands/`, `skills/` y `plugins/` dentro de su directorio de configuración global.
+OpenCode automatically discovers files in `agents/`, `commands/`, `skills/`, and `plugins/` within its global configuration directory.

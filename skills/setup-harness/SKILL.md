@@ -1,21 +1,21 @@
 ---
 name: setup-harness
-description: Instalar o reparar el arnés Parri en el proyecto Git actual, crear su estado y generar un check.sh mínimo con los checks declarados por el proyecto.
+description: Install or repair the Parri harness in the current Git project, create its state, and generate a minimal check.sh with the checks declared by the project.
 ---
 
-# Setup del arnés
+# Harness setup
 
-Instalá el arnés sin implementar código de producto. Conservá documentación, configuración y estado existentes.
+Install the harness without implementing production code. Preserve existing documentation, configuration, and state.
 
-## Inspección segura
+## Safe inspection
 
-Leé la estructura, `AGENTS.md`, manifiestos, configuración pública y tests. Nunca leas ni solicites `.env`, `.env.*`, credenciales, claves privadas o logs con secretos. Durante el setup no ejecutes tests, CLIs del framework, comandos de base de datos, despliegues ni servicios externos.
+Read the structure, `AGENTS.md`, manifests, public configuration, and tests. Never read or request `.env`, `.env.*`, credentials, private keys, or logs with secrets. During setup, do not run tests, framework CLIs, database commands, deployments, or external services.
 
-Comprobá que `git` está disponible y que la raíz pertenece a un worktree con `git rev-parse --is-inside-work-tree`. Si no se cumple, detenete; no ejecutes `git init`.
+Verify that `git` is available and that the root belongs to a worktree with `git rev-parse --is-inside-work-tree`. If either condition is not met, stop; do not run `git init`.
 
-## Estado inicial
+## Initial state
 
-Creá solamente los artefactos faltantes:
+Create only missing artifacts:
 
 ```text
 .ai/features.json
@@ -25,56 +25,56 @@ docs/engineering.md
 check.sh
 ```
 
-Un `features.json` nuevo contiene `[]`.
+A new `features.json` contains `[]`.
 
-`history.md` comienza con `# Historial`. Nunca sobrescribas estado existente. Si `features.json` no es JSON válido, detenete y explicá el error.
+`history.md` starts with `# History`. Never overwrite existing state. If `features.json` is not valid JSON, stop and explain the error.
 
-Si `docs/engineering.md` no existe, cargá `code-architecture` y completá ese flujo. No deduzcas reglas deseadas únicamente del legacy. Asegurá, con aprobación previa, que el `AGENTS.md` aplicable referencia `docs/engineering.md`.
+If `docs/engineering.md` does not exist, load `code-architecture` and complete that workflow. Do not infer desired rules from legacy code alone. With prior approval, ensure that the applicable `AGENTS.md` references `docs/engineering.md`.
 
-## Descubrir los checks
+## Discover checks
 
-Buscá en manifiestos, documentación y configuración pública los comandos declarados por el proyecto para:
+Search manifests, documentation, and public configuration for project-declared commands for:
 
-- la suite completa de tests, obligatoria;
-- el linter, opcional;
-- el typecheck, opcional.
+- the full test suite, required;
+- the linter, optional;
+- typecheck, optional.
 
-No deduzcas un comando solo por su nombre convencional. Si existe una única declaración clara, usala. Si hay varias candidatas, mostrale al usuario los comandos concretos y preguntá cuál representa el check correspondiente. Si no hay una suite completa declarada, explicalo y proponé una configuración concreta; no inventes un comando ni completes el setup.
+Do not infer a command solely from its conventional name. If there is one clear declaration, use it. If there are several candidates, show the user the concrete commands and ask which represents the corresponding check. If no full suite is declared, explain it and propose a concrete configuration; do not invent a command or complete setup.
 
-Los comandos de lint y typecheck deben ser de solo comprobación: nunca uses modos de autofix o escritura. No ejecutes ningún check durante el setup.
+Lint and typecheck commands must be check-only: never use autofix or write modes. Do not run any check during setup.
 
-Registrá en `docs/engineering.md`, bajo `## Tests`, el comando de suite completa y los checks opcionales encontrados. Conservá el resto de la guía y no dupliques la sección.
+Record the full-suite command and found optional checks under `## Tests` in `docs/engineering.md`. Preserve the rest of the guide and do not duplicate the section.
 
-## Generar check.sh
+## Generate check.sh
 
-Leé `assets/check.sh` desde este skill y reemplazá todos los tokens `__PARRI_*__` con arrays shell seguros. Usá ejecutable y argumentos separados; no generes `eval` ni `sh -c`. Si un comando declara variables de entorno, representalas mediante `env NOMBRE=valor`. La suite completa es obligatoria. Para checks opcionales ausentes, usá arrays vacíos.
+Read `assets/check.sh` from this skill and replace every `__PARRI_*__` token with safe shell arrays. Use separate executables and arguments; do not generate `eval` or `sh -c`. If a command declares environment variables, represent them with `env NAME=value`. The full suite is required. Use empty arrays for absent optional checks.
 
-Creá un único `check.sh` ejecutable en la raíz. Si ya existe, mostrale al usuario el diff propuesto y obtené aprobación antes de reemplazarlo.
+Create one executable `check.sh` at the root. If it already exists, show the user the proposed diff and obtain approval before replacing it.
 
-No ejecutes `./check.sh` durante el setup. Validá solamente:
+Do not run `./check.sh` during setup. Validate only:
 
-- que no queden tokens `__PARRI_*__`;
+- that no `__PARRI_*__` tokens remain;
 - `bash -n check.sh`;
-- el bit ejecutable.
+- the executable bit.
 
-## Feature inicial opcional
+## Optional initial feature
 
-Si el usuario ya describió una feature o pide crearla durante el setup, registrala con el siguiente ID libre `F-NNN`. Para una feature SDD, creá `.ai/features/F-NNN-slug/` y guardá esa ruta exacta. No crees todavía `requirements.md`, `design.md` ni `tasks.md`: los crea el orquestador.
+If the user has already described a feature or asks to create one during setup, register it with the next available `F-NNN` ID. For an SDD feature, create `.ai/features/F-NNN-slug/` and store that exact path. Do not create `requirements.md`, `design.md`, or `tasks.md` yet: the orchestrator creates them.
 
-Cada entrada usa este contrato:
+Each entry uses this contract:
 
 ```json
 {
   "id": "F-001",
-  "title": "Título en español",
-  "description": "Resultado esperado",
-  "acceptance_criteria": ["Criterio verificable"],
+  "title": "Title",
+  "description": "Expected outcome",
+  "acceptance_criteria": ["Verifiable criterion"],
   "sdd": true,
   "path": ".ai/features/F-001-slug",
   "status": "pending"
 }
 ```
 
-Para una feature sin SDD, `path` debe ser `null`.
+For a feature without SDD, `path` must be `null`.
 
-Terminá resumiendo qué se creó, qué se conservó y qué checks quedaron configurados.
+Finish by summarizing what was created, what was preserved, and which checks were configured.

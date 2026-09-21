@@ -7,7 +7,7 @@ TYPECHECK_COMMAND=(__PARRI_TYPECHECK_COMMAND__)
 TEST_COMMAND=(__PARRI_TEST_COMMAND__)
 
 if (( $# != 0 )); then
-  printf '[FAIL] check.sh no acepta argumentos\n' >&2
+  printf '[FAIL] check.sh does not accept arguments\n' >&2
   exit 1
 fi
 
@@ -33,7 +33,7 @@ run_check() {
 }
 
 if (( ${#TEST_COMMAND[@]} == 0 )); then
-  printf '[FAIL] La suite completa de tests no está configurada\n' >&2
+  printf '[FAIL] The full test suite is not configured\n' >&2
   exit 1
 fi
 
