@@ -17,7 +17,6 @@ permission:
     "**/.env": deny
     "**/.env.*": deny
     ".ai/features.json": deny
-    ".ai/progress/current.md": deny
     ".ai/progress/history.md": deny
     ".ai/progress/review_*.md": deny
     ".ai/features/*/requirements.md": deny

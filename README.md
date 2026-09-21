@@ -23,7 +23,6 @@ El setup crea y configura:
 ```text
 .ai/features.json
 .ai/features/
-.ai/progress/current.md
 .ai/progress/history.md
 docs/engineering.md
 check.sh

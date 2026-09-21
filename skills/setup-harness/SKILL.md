@@ -20,19 +20,12 @@ Creá solamente los artefactos faltantes:
 ```text
 .ai/features.json
 .ai/features/
-.ai/progress/current.md
 .ai/progress/history.md
 docs/engineering.md
 check.sh
 ```
 
-Un `features.json` nuevo contiene `[]`. `current.md` comienza con:
-
-```markdown
-# Activo
-
-No hay ninguna feature activa.
-```
+Un `features.json` nuevo contiene `[]`.
 
 `history.md` comienza con `# Historial`. Nunca sobrescribas estado existente. Si `features.json` no es JSON válido, detenete y explicá el error.
 
