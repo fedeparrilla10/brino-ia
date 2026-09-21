@@ -39,13 +39,6 @@ check.sh
 
 `check.sh` reúne la suite completa y, cuando el proyecto los declara, lint y typecheck. El setup descubre esos comandos en archivos públicos y solo pregunta cuando hay varias opciones o falta una suite configurada.
 
-Después, registra o ejecuta trabajo con:
-
-```text
-/harness
-/harness F-001
-```
-
 Una feature con SDD pasa por `pending -> spec_ready`, se detiene para aprobación humana y solo entonces continúa a `in_progress`.
 
 ## Comprobación del paquete
