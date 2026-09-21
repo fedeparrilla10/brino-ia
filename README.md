@@ -32,12 +32,6 @@ check.sh
 
 Una feature con SDD pasa por `pending -> spec_ready`, se detiene para aprobación humana y solo entonces continúa a `in_progress`.
 
-## Comprobación del paquete
-
-```bash
-node --test tests/*.test.mjs
-```
-
 ## Estructura instalada
 
 OpenCode descubre automáticamente los archivos de `agents/`, `commands/`, `skills/` y `plugins/` dentro de su directorio de configuración global.
