@@ -32,6 +32,12 @@ check.sh
 
 An SDD feature moves through `pending -> spec_ready`, stops for human approval, and only then continues to `in_progress`.
 
+## Register a feature
+
+After setup, ask OpenCode to create or register a feature. The `feature` skill derives a concise, verifiable contract and appends it to `.ai/features.json` without implementing it.
+
+It supports `--direct` to use only the current request, `--sdd` to require SDD, and `--no-sdd` to skip it. SDD features receive a directory under `.ai/features/`; it is populated later with the SDD documents.
+
 ## Installed structure
 
 OpenCode automatically discovers files in `agents/`, `commands/`, `skills/`, and `plugins/` within its global configuration directory.

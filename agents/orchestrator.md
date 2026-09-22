@@ -44,18 +44,11 @@ Allowed statuses:
 
 Persist `features.json` before launching a subagent. Add only relevant completions and blockers to `history.md`; never rewrite its history.
 
-## Register a feature
+## Feature intake
 
-When the user asks to register work that does not yet exist:
+Feature registration is owned by the `feature` skill. It validates the full harness, creates the pending entry, and decides whether SDD applies. Do not duplicate or override that intake workflow.
 
-1. Define a title, description, and verifiable acceptance criteria.
-2. Recommend `sdd: true` when technical decisions, multiple behaviors, persistence, integrations, or risk are involved; use `false` for small, obvious changes.
-3. If the choice is unclear, ask for confirmation before registering it.
-4. Assign the next available `F-NNN` ID.
-5. For SDD, create `.ai/features/F-NNN-slug/` and store that exact path. For non-SDD, use `path: null`.
-6. Register it as `pending`.
-
-Do not create additional directories or files.
+After a feature is registered, use `.ai/features.json` as the authority and continue only when the user asks to prepare or execute that feature.
 
 ## Prepare SDD
 
