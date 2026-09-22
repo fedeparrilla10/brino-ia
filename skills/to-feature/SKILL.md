@@ -1,5 +1,5 @@
 ---
-name: feature
+name: to-feature
 description: Register a new feature in the current project's .ai/features.json, deriving a concise contract and deciding whether SDD is needed. Use whenever the user asks to create, add, queue, or register feature work, including requests with --direct, --sdd, or --no-sdd.
 ---
 

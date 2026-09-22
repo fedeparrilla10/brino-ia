@@ -46,7 +46,7 @@ Persist `features.json` before launching a subagent. Add only relevant completio
 
 ## Feature intake
 
-Feature registration is owned by the `feature` skill. It validates the full harness, creates the pending entry, and decides whether SDD applies. Do not duplicate or override that intake workflow.
+Feature registration is owned by the `to-feature` skill. It validates the full harness, creates the pending entry, and decides whether SDD applies. Do not duplicate or override that intake workflow.
 
 After a feature is registered, use `.ai/features.json` as the authority and continue only when the user asks to prepare or execute that feature.
 

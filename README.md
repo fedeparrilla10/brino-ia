@@ -34,7 +34,7 @@ An SDD feature moves through `pending -> spec_ready`, stops for human approval, 
 
 ## Register a feature
 
-After setup, ask OpenCode to create or register a feature. The `feature` skill derives a concise, verifiable contract and appends it to `.ai/features.json` without implementing it.
+After setup, ask OpenCode to create or register a feature. The `to-feature` skill derives a concise, verifiable contract and appends it to `.ai/features.json` without implementing it.
 
 It supports `--direct` to use only the current request, `--sdd` to require SDD, and `--no-sdd` to skip it. SDD features receive a directory under `.ai/features/`; it is populated later with the SDD documents.
 
