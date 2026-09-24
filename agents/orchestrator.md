@@ -42,7 +42,7 @@ Allowed statuses:
 - Non-SDD: `pending -> in_progress -> done`.
 - Use `blocked` when the workflow cannot continue without human intervention.
 
-Persist `features.json` before launching a subagent. Add only relevant completions and blockers to `history.md`; never rewrite its history.
+Persist `features.json` before launching a subagent. Add only relevant completions and blockers to `history.md`; never rewrite its history. Always append each entry on a new line; add a line break first when the file does not end with one.
 
 ## Feature intake
 
@@ -66,22 +66,24 @@ With an approved spec, or directly for a feature without SDD, run `./check.sh` f
 
 If the baseline passes, change the status to `in_progress` and launch `implementer` with the ID and exact path when it exists.
 
-Then read `.ai/progress/impl_<ID>.md`. It must contain exactly one signal:
+Then read `.ai/progress/impl_<ID>.md`. It must follow the implementer template: its first line is exactly one of these signals, it contains no other workflow signal, and it has only the required `Resumen`, `Cambios`, and `Pendientes` sections:
 
 - `<workflow-status>IMPLEMENTATION_COMPLETE</workflow-status>`
 - `<workflow-status>IMPLEMENTATION_BLOCKED</workflow-status>`
 
 If it is blocked, save the reason, mark it `blocked`, and stop. If it is complete, launch `reviewer` with attempt 1 and read `.ai/progress/review_<ID>.md`.
 
-Valid reviewer signals:
+The first line of `.ai/progress/review_<ID>.md` must be exactly one of these valid reviewer signals, with no other workflow signal in the file:
 
 - `<workflow-status>REVIEW_APPROVED</workflow-status>`
 - `<workflow-status>REVIEW_FAILED</workflow-status>`
 - `<workflow-status>REVIEW_BLOCKED</workflow-status>`
 
+Its report must use the reviewer template. When there are multiple reviews, require the literal separator and `## (N/T)` counters for every preserved report; the XML signal remains only on the first line and represents the latest result.
+
 If the review fails, send the report to the implementer for a fix and then relaunch the reviewer with the next attempt number.
 
-When the review is approved, run `./check.sh`. If it passes, mark it `done` and add a short summary to `history.md`.
+When the review is approved, run `./check.sh`. If it passes, mark it `done` and append a short summary on a new line to `history.md`.
 
 If the final check fails, send its result to the implementer for a fix and then repeat the independent review before running `./check.sh` again. Allow only one automatic correction cycle in total, whether triggered by the review or final check. If that cycle was already used, a review fails again, or any agent becomes blocked, mark the feature `blocked`, preserve the reports, and ask for human intervention.
 

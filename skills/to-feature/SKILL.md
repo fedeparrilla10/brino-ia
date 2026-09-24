@@ -1,6 +1,6 @@
 ---
 name: to-feature
-description: Register a new feature in the current project's .ai/features.json, deriving a concise contract and deciding whether SDD is needed. Use whenever the user asks to create, add, queue, or register feature work, including requests with --direct, --sdd, or --no-sdd.
+description: Register a new feature in the current project's .ai/features.json, deriving a concise contract. Use whenever the user asks to create, add, queue, or register feature work, including requests with --sdd.
 ---
 
 # Feature intake
@@ -9,12 +9,10 @@ Register work for the orchestrator. Do not implement code, generate specificatio
 
 ## Input modes
 
-- Default: derive the feature from the current request and relevant decisions already established in the conversation.
-- `--direct`: use only the text supplied with the current instruction. Do not summarize earlier conversation.
+- Derive the feature from the current request and relevant decisions already established in the conversation.
 - `--sdd`: force `sdd: true`.
-- `--no-sdd`: force `sdd: false`.
 
-Reject `--sdd` combined with `--no-sdd`. If direct mode has no feature text, ask for it. Ask questions only when the available context cannot produce a concrete description and observable acceptance criteria.
+Ask questions only when the available context cannot produce a concrete description and observable acceptance criteria.
 
 ## Require the harness
 
@@ -54,13 +52,11 @@ Choose the next ID by taking the highest numeric `F-NNN` ID and adding one, star
 
 Write acceptance criteria as specific observable outcomes. Include unchanged behavior or relevant error behavior when it materially protects against regression. Do not add implementation steps, file paths, architecture choices, test plans, or speculative scope.
 
-## Decide SDD
+## SDD
 
-Use `sdd: false` for a small, localized, obvious, low-ambiguity change such as copy, simple validation, or a focused bug fix.
+Set `sdd: false` by default. Do not infer, recommend, or enable SDD based on the feature's complexity, ambiguity, scope, risk, migrations, contracts, APIs, or any other characteristic.
 
-Use `sdd: true` when the work introduces non-trivial behavior, spans layers or modules, requires technical decisions, has multiple cases or edge cases, changes migrations, contracts, or APIs, or carries meaningful regression risk.
-
-An explicit override always wins. Otherwise, prefer `sdd: true` when uncertainty is material; do not turn every feature into SDD.
+Set `sdd: true` only when the user explicitly supplies `--sdd`.
 
 Only when SDD is true, create `.ai/features/<feature-id>-<slug>/` and store its repository-relative path, for example `"path": ".ai/features/F-001-filter-products"`. Derive a concise lowercase kebab-case slug from the title, remove diacritics, and use only `a-z`, `0-9`, and hyphens; use `feature` if no usable characters remain. The feature ID is the stable identity. Never create a second directory with the same `<feature-id>-` prefix.
 
@@ -70,4 +66,4 @@ When SDD is false, keep `path: null` and do not create a feature directory.
 
 ## Finish
 
-Write valid, consistently formatted JSON. Return the feature ID, title, SDD decision with one short reason, and the feature directory when SDD is enabled.
+Write valid, consistently formatted JSON. Return the feature ID, title, whether SDD was explicitly requested, and the feature directory when SDD is enabled.

@@ -38,14 +38,42 @@ Review:
 
 Independently run tests created or modified by the implementer and any directly affected pre-existing test needed to verify the change. Use Bash only for those tests and read-only Git queries; do not run `./check.sh`, the full suite, deployments, database operations, or external services. Passing tests do not replace semantic review, and the implementer's report does not replace independent evidence.
 
-Write or update `.ai/progress/review_<ID>.md`. Preserve previous attempts and add a `## Attempt N` section. Include exactly one signal in the new section:
+Write or update `.ai/progress/review_<ID>.md` using this exact template. The current workflow signal must be the first line of the file and may appear only once:
 
-- `<workflow-status>REVIEW_APPROVED</workflow-status>`
-- `<workflow-status>REVIEW_FAILED</workflow-status>`
-- `<workflow-status>REVIEW_BLOCKED</workflow-status>`
+```md
+<workflow-status>REVIEW_APPROVED|REVIEW_FAILED|REVIEW_BLOCKED</workflow-status>
 
-The complete file must contain only one current signal: when adding a new attempt, replace the previous signal with the normal text `Previous result: review failed`.
+## (1/1)
+Resultado: REVIEW_APPROVED|REVIEW_FAILED|REVIEW_BLOCKED
 
-Include coverage of criteria and requirements, test quality, engineering compliance, executed commands, results, and blocking findings with file and line when possible.
+### Bloqueos
+- Ninguno
 
-Approve only if every criterion has evidence, tests are meaningful, tasks are complete, and affected tests pass. Use blocked when a manual verification is missing that agents cannot safely run. Return only the report path.
+### Recomendaciones
+- Ninguna
+```
+
+Fill every section with concise information; use `Ninguno` when applicable. Do not add sections, XML labels, command transcripts, or text before the current signal.
+
+For each new review, preserve the complete previous report below the same file, separated exactly by this line:
+
+```text
+-------------------------------------------------
+```
+
+Update every counter to the final total. For example, with two reviews the file has `## (1/2)` and `## (2/2)`. Change the former current result to normal text (`Resultado: REVIEW_FAILED`); only the first-line XML label represents the latest result. Do not write `Attempt` or `Intento`.
+
+Block only for one of these findings:
+
+- incorrect code;
+- an unmet acceptance criterion;
+- a regression;
+- a security error;
+- a data or migration risk;
+- an affected pre-existing test that fails.
+
+All other findings are non-blocking recommendations, including missing or incomplete test coverage, test quality, engineering-convention deviations, incomplete SDD tasks, unrequested scope, and manual verification that cannot be performed safely. Format each as `⚠️ Recomendación: <finding>.`
+
+Record blocking findings with file and line when possible. Do not add a dedicated test or verification section.
+
+Use `REVIEW_FAILED` only when a blocking finding exists. Use `REVIEW_APPROVED` otherwise, even when there are recommendations. Do not use `REVIEW_BLOCKED`. Return only the report path.

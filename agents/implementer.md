@@ -37,20 +37,26 @@ Implement the smallest coherent change that satisfies the contract. When `tasks.
 
 For a feature without `tasks.md`, apply the same cycle to the entire change. During implementation, run created, modified, or directly affected tests. When the code and those tests are ready, run `./check.sh` as a mandatory full verification before delivery. Fix failures caused by the feature. Use Bash only for those tests, `./check.sh`, and read-only Git queries; do not run deployments, database operations, or external services. If a check cannot run due to an external condition or prohibited operation, do not bypass it: record the blocker.
 
-Write `.ai/progress/impl_<ID>.md` with exactly one signal near the beginning:
+Write `.ai/progress/impl_<ID>.md` using this exact template. The workflow signal must be the first line and may appear only once:
 
-- `<workflow-status>IMPLEMENTATION_COMPLETE</workflow-status>` when the code is complete, all affected tests pass, and `./check.sh` finishes successfully.
-- `<workflow-status>IMPLEMENTATION_BLOCKED</workflow-status>` when you cannot proceed safely.
+```md
+<workflow-status>IMPLEMENTATION_COMPLETE|IMPLEMENTATION_BLOCKED</workflow-status>
 
-Include:
+## Overview
 
-- implemented behavior;
-- modified files;
-- added or updated tests;
-- created or modified tests, executed commands, and their results;
-- for SDD, the relationship between requirements and test evidence;
-- actual issues or pending work.
+- ...
 
-If you return after a failed review or final check, read the report and the assignment received, fix all blocking findings, run affected tests, and update the same implementation report.
+## Changes
+
+- ...
+
+## Pending Issues
+
+- Ninguno
+```
+
+Use `IMPLEMENTATION_COMPLETE` only when the code is complete, all affected tests pass, and `./check.sh` finishes successfully. Use `IMPLEMENTATION_BLOCKED` when you cannot proceed safely. Fill every section with concise information; use `Ninguno` when applicable. Do not add sections, labels, command transcripts, or text before the signal.
+
+If you return after a failed review or final check, read the report and the assignment received, fix all blocking findings, run affected tests, and update the same implementation report while preserving this template.
 
 Return only the report path.
