@@ -27,24 +27,19 @@ Read the entry in `.ai/features.json`, `docs/engineering.md`, applicable instruc
 
 Review:
 
-- every acceptance criterion and requirement against concrete evidence;
-- production code and tests;
-- whether added or modified tests are meaningful and fail without the implemented behavior;
-- observable behavior, error cases, and obvious regressions;
-- security and data integrity;
-- compliance with `docs/engineering.md`;
-- complete SDD tasks consistent with the implementation;
-- unrequested scope.
+- acceptance criteria and requirements against concrete evidence;
+- code, affected tests, error cases, regressions, security, and data integrity;
+- test quality, SDD tasks, engineering conventions, and unrequested scope.
 
-Independently run tests created or modified by the implementer and any directly affected pre-existing test needed to verify the change. Use Bash only for those tests and read-only Git queries; do not run `./check.sh`, the full suite, deployments, database operations, or external services. Passing tests do not replace semantic review, and the implementer's report does not replace independent evidence.
+Independently run created, modified, and directly affected pre-existing tests. Use Bash only for those tests and read-only Git queries; do not run `./check.sh`, the full suite, deployments, database operations, or external services. Passing tests and the implementation report do not replace independent review.
 
 Write or update `.ai/progress/review_<ID>.md` using this exact template. The current workflow signal must be the first line of the file and may appear only once:
 
 ```md
-<workflow-status>REVIEW_APPROVED|REVIEW_FAILED|REVIEW_BLOCKED</workflow-status>
+<workflow-status>REVIEW_APPROVED|REVIEW_FAILED</workflow-status>
 
 ## (1/1)
-Resultado: REVIEW_APPROVED|REVIEW_FAILED|REVIEW_BLOCKED
+Resultado: REVIEW_APPROVED|REVIEW_FAILED
 
 ### Bloqueos
 - Ninguno
@@ -53,27 +48,18 @@ Resultado: REVIEW_APPROVED|REVIEW_FAILED|REVIEW_BLOCKED
 - Ninguna
 ```
 
-Fill every section with concise information; use `Ninguno` when applicable. Do not add sections, XML labels, command transcripts, or text before the current signal.
+Fill every section concisely; use `Ninguno` when applicable. Do not add sections, extra signals, command transcripts, or text before the current signal.
 
-For each new review, preserve the complete previous report below the same file, separated exactly by this line:
+For each new review, preserve the previous report in the same file, separated exactly by:
 
 ```text
 -------------------------------------------------
 ```
 
-Update every counter to the final total. For example, with two reviews the file has `## (1/2)` and `## (2/2)`. Change the former current result to normal text (`Resultado: REVIEW_FAILED`); only the first-line XML label represents the latest result. Do not write `Attempt` or `Intento`.
+Update every counter to the final total (`## (1/2)`, `## (2/2)` for two reviews). Keep only one XML signal, on the first line, for the latest result; preserve previous results as `Resultado: REVIEW_FAILED` or `Resultado: REVIEW_APPROVED`.
 
-Block only for one of these findings:
-
-- incorrect code;
-- an unmet acceptance criterion;
-- a regression;
-- a security error;
-- a data or migration risk;
-- an affected pre-existing test that fails.
-
-All other findings are non-blocking recommendations, including missing or incomplete test coverage, test quality, engineering-convention deviations, incomplete SDD tasks, unrequested scope, and manual verification that cannot be performed safely. Format each as `⚠️ Recomendación: <finding>.`
+Fail only for incorrect code, unmet acceptance criteria, regressions, security or data/migration risks, or failing affected pre-existing tests. All other findings are recommendations, including test coverage or quality, engineering deviations, incomplete SDD tasks, unrequested scope, and unsafe manual verification. Format each as `⚠️ Recomendación: <finding>.`
 
 Record blocking findings with file and line when possible. Do not add a dedicated test or verification section.
 
-Use `REVIEW_FAILED` only when a blocking finding exists. Use `REVIEW_APPROVED` otherwise, even when there are recommendations. Do not use `REVIEW_BLOCKED`. Return only the report path.
+Use `REVIEW_FAILED` only for blocking findings; otherwise use `REVIEW_APPROVED`, even with recommendations. Return only the report path.

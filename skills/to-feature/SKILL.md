@@ -5,14 +5,9 @@ description: Register a new feature in the current project's .ai/features.json, 
 
 # Feature intake
 
-Register work for the orchestrator. Do not implement code, generate specifications, design a solution, create tasks, or review changes.
+Register the feature contract only; do not design, implement, or review it.
 
-## Input modes
-
-- Derive the feature from the current request and relevant decisions already established in the conversation.
-- `--sdd`: force `sdd: true`.
-
-Ask questions only when the available context cannot produce a concrete description and observable acceptance criteria.
+Derive the contract from the current request and established decisions. Ask questions only when that context cannot produce a concrete description and observable acceptance criteria.
 
 ## Require the harness
 
@@ -54,13 +49,11 @@ Write acceptance criteria as specific observable outcomes. Include unchanged beh
 
 ## SDD
 
-Set `sdd: false` by default. Do not infer, recommend, or enable SDD based on the feature's complexity, ambiguity, scope, risk, migrations, contracts, APIs, or any other characteristic.
-
-Set `sdd: true` only when the user explicitly supplies `--sdd`.
+Set `sdd: true` only when the user explicitly supplies `--sdd`; otherwise set `sdd: false`, regardless of complexity or risk.
 
 Only when SDD is true, create `.ai/features/<feature-id>-<slug>/` and store its repository-relative path, for example `"path": ".ai/features/F-001-filter-products"`. Derive a concise lowercase kebab-case slug from the title, remove diacritics, and use only `a-z`, `0-9`, and hyphens; use `feature` if no usable characters remain. The feature ID is the stable identity. Never create a second directory with the same `<feature-id>-` prefix.
 
-Do not add a placeholder file solely to track the empty directory in Git. The orchestrator will populate the directory with the SDD artifacts before the feature is committed.
+Do not add a placeholder file to track the empty directory in Git. `sdd-creator` will populate it later.
 
 When SDD is false, keep `path: null` and do not create a feature directory.
 

@@ -5,13 +5,13 @@ description: Install or repair the Parri harness in the current Git project, cre
 
 # Harness setup
 
-Install the harness without implementing production code. Preserve existing documentation, configuration, and state.
+Install the harness without implementing code or overwriting existing documentation, configuration, or state.
 
 ## Safe inspection
 
 Read the structure, `AGENTS.md`, manifests, public configuration, and tests. Never read or request `.env`, `.env.*`, credentials, private keys, or logs with secrets. During setup, do not run tests, framework CLIs, database commands, deployments, or external services.
 
-Verify that `git` is available and that the root belongs to a worktree with `git rev-parse --is-inside-work-tree`. If either condition is not met, stop; do not run `git init`.
+Require an existing Git worktree (`git rev-parse --is-inside-work-tree`); do not run `git init`.
 
 ## Initial state
 
@@ -39,7 +39,7 @@ Search manifests, documentation, and public configuration for project-declared c
 - the linter, optional;
 - typecheck, optional.
 
-Do not infer a command solely from its conventional name. If there is one clear declaration, use it. If there are several candidates, show the user the concrete commands and ask which represents the corresponding check. If no full suite is declared, explain it and propose a concrete configuration; do not invent a command or complete setup.
+Use only project-declared commands. Ask the user to choose among multiple candidates; if no full suite is declared, propose a concrete configuration and stop rather than inventing a command.
 
 Lint and typecheck commands must be check-only: never use autofix or write modes. Do not run any check during setup.
 
@@ -59,7 +59,7 @@ Do not run `./check.sh` during setup. Validate only:
 
 ## Optional initial feature
 
-If the user has already described a feature or asks to create one during setup, register it with the next available `F-NNN` ID. For an SDD feature, create `.ai/features/F-NNN-slug/` and store that exact path. Do not create `requirements.md`, `design.md`, or `tasks.md` yet: the orchestrator creates them.
+If the user has already described a feature or asks to create one during setup, register it with the next available `F-NNN` ID. For an SDD feature, create `.ai/features/F-NNN-slug/` and store that exact path. Do not create the SDD documents: `sdd-creator` prepares them later.
 
 Each entry uses this contract:
 

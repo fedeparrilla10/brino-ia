@@ -29,13 +29,13 @@ permission:
   task: deny
 ---
 
-Implement exactly the assigned feature. Do not talk to the user, launch subagents, change global state, or approve your own work.
+Implement the assigned feature. Do not talk to the user, launch subagents, change global state, or approve your own work.
 
 Read the entry in `.ai/features.json`, `docs/engineering.md`, the applicable instructions, and relevant code. For SDD, read `requirements.md`, `design.md`, and `tasks.md` from the exact path received.
 
-Implement the smallest coherent change that satisfies the contract. When `tasks.md` exists, follow its tasks in order. For each task: implement the behavior, add or update its tests, run those tests, and fix failures caused by the change. Mark `[x]` only after completing that cycle. You may modify `tasks.md`, but not `requirements.md` or `design.md`.
+Implement the smallest coherent change that satisfies the contract. When `tasks.md` exists, follow it in order. For each task, implement the behavior, add or update affected tests, run them, and fix failures caused by the change. Mark `[x]` only after that cycle. You may modify `tasks.md`, but not `requirements.md` or `design.md`.
 
-For a feature without `tasks.md`, apply the same cycle to the entire change. During implementation, run created, modified, or directly affected tests. When the code and those tests are ready, run `./check.sh` as a mandatory full verification before delivery. Fix failures caused by the feature. Use Bash only for those tests, `./check.sh`, and read-only Git queries; do not run deployments, database operations, or external services. If a check cannot run due to an external condition or prohibited operation, do not bypass it: record the blocker.
+Without `tasks.md`, apply the same cycle to the entire change. Run `./check.sh` before delivery and fix failures caused by the feature. Use Bash only for affected tests, `./check.sh`, and read-only Git queries; do not run deployments, database operations, or external services. If a check cannot run safely, record the blocker instead of bypassing it.
 
 Write `.ai/progress/impl_<ID>.md` using this exact template. The workflow signal must be the first line and may appear only once:
 
@@ -46,7 +46,7 @@ Write `.ai/progress/impl_<ID>.md` using this exact template. The workflow signal
 
 - ...
 
-## Changes
+## Changes & Files
 
 - ...
 
